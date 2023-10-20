@@ -12,7 +12,7 @@ apt-get update || handle_error "Failed to update package index"
 echo "##########  Installing snapd - Snapcraft store daemon  ##########"
 apt-get install snapd || handle_error "Failed to install snapd"
 
-echo "##########  Installing the Domotz Pro agent snap package"
+echo "##########  Installing the Domotz Pro agent snap package  ##########"
 snap install domotzpro-agent-publicstore || handle_error "Failed to install Domotz Pro agent"
 
 echo "##########  Giving the Domotz Pro agent package needed permissions  ##########"
