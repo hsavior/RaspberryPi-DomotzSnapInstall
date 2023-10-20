@@ -26,9 +26,14 @@ snap connect domotzpro-agent-publicstore:system-observe
 modprobe tun || handle_error "Failed to load the tun module"
 grep -qxF "tun" /etc/modules || echo "tun" >> /etc/modules
 
-# Disable the module libarmmem that conflicts with the snap package
-# This preloaded module conflicts with the snap package, causing VPN On Demand not to work.
-sed -i 's|/usr/lib/arm-linux-gnueabihf/libarmmem-${PLATFORM}.so|#/usr/lib/arm-linux-gnueabihf/libarmmem-${PLATFORM}.so|' /etc/ld.so.preload
+# Check if the file /etc/ld.so.preload exists before modifying it
+if [ -f /etc/ld.so.preload ]; then
+  # Disable the module libarmmem that conflicts with the snap package
+  # This preloaded module conflicts with the snap package, causing VPN On Demand not to work.
+  sed -i 's|/usr/lib/arm-linux-gnueabihf/libarmmem-${PLATFORM}.so|#/usr/lib/arm-linux-gnueabihf/libarmmem-${PLATFORM}.so|' /etc/ld.so.preload
+else
+  echo "File /etc/ld.so.preload not found. Skipping modification."
+fi
 
 # Comment out the line with "Include /etc/ssh/ssh_config.d/*.conf"
 # This setting conflicts with the snap package environment, preventing remote sessions.
