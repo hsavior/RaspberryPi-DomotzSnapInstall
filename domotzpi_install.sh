@@ -15,6 +15,9 @@ apt-get install snapd || handle_error "Failed to install snapd"
 echo "##########  Installing the Domotz Pro agent snap package  ##########"
 snap install domotzpro-agent-publicstore || handle_error "Failed to install Domotz Pro agent"
 
+echo "##########  Waiting for the Snap service to start (15 seconds delay)  ##########"
+sleep 15
+
 echo "##########  Giving the Domotz Pro agent package needed permissions  ##########"
 snap connect domotzpro-agent-publicstore:firewall-control
 snap connect domotzpro-agent-publicstore:network-observe
